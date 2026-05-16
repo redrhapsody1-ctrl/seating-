@@ -5,210 +5,376 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>미래엔 1-1 국어 - 매체에 드러난 숨은 의미 찾기</title>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <style>
-        .activity-example-img {
-            width: 100%;
-            height: 200px; /* 모든 사진의 높이를 통일하여 깔끔하게 배치 */
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            object-fit: cover; /* 사진 비율이 깨지지 않게 꽉 채움 */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        /* 기본 스타일 설정 */
+        :root {
+            --primary-color: #4a90e2;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
         }
-        .activity-example-caption {
-            font-size: 0.85rem;
-            color: #555;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-weight: bold;
-            background-color: #f9f9f9;
-            padding: 5px;
-            border-radius: 4px;
-        }
+        body { font-family: 'Nanum Gothic', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; line-height: 1.6; }
+        header { background-color: var(--primary-color); color: white; padding: 2rem 1rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        main { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        .category { margin-bottom: 3rem; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .category h2 { border-left: 5px solid var(--primary-color); padding-left: 15px; margin-bottom: 1.5rem; }
+        .activity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--bg-color); border-radius: 10px; padding: 1.5rem; border: 1px solid #ddd; display: flex; flex-direction: column; }
+        .card h3 { margin-top: 0; color: var(--primary-color); font-size: 1.1rem; }
+        textarea { width: 100%; height: 90px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; resize: none; margin-top: auto; font-family: 'Nanum Gothic', sans-serif;}
+        
+        /* 🔥 가상 미디어 화면(모크업) 디자인 스타일 🔥 */
+        .mockup-container { margin-bottom: 15px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.15); font-family: 'Nanum Gothic', sans-serif; }
+        
+        /* 뉴스 모크업 */
+        .mockup-news { background: #fff; border: 1px solid #ccc; padding: 15px; border-top: 4px solid #333; }
+        .mockup-news-head { font-weight: 800; font-size: 1.2rem; line-height: 1.3; margin-bottom: 10px; word-break: keep-all;}
+        .mockup-news-body { font-size: 0.85rem; color: #444; border-top: 1px solid #eee; padding-top: 10px; }
+        
+        /* 광고 모크업 (KOBACO 스타일) */
+        .mockup-ad { background: #2c3e50; color: #fff; padding: 20px; text-align: center; }
+        .mockup-ad-visual { font-size: 3rem; margin-bottom: 10px; }
+        .mockup-ad-main { font-size: 1.4rem; font-weight: bold; margin-bottom: 10px; word-break: keep-all; }
+        .mockup-ad-desc { font-size: 0.85rem; margin-bottom: 15px; color: #bdc3c7;}
+        .mockup-ad-small { font-size: 0.65rem; color: #7f8c8d; text-align: right; }
+        
+        /* SNS 모크업 (인스타그램 스타일) */
+        .mockup-sns { background: #fff; border: 1px solid #ddd; }
+        .mockup-sns-top { padding: 10px; font-weight: bold; font-size: 0.85rem; display: flex; align-items: center; border-bottom: 1px solid #eee; }
+        .mockup-sns-img { background: #e0e0e0; height: 130px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #555; padding: 10px; text-align: center;}
+        .mockup-sns-bottom { padding: 10px; font-size: 0.85rem; }
+        .mockup-sns-tags { color: #003569; letter-spacing: -0.5px; }
+        
+        /* 영상 모크업 (유튜브 스타일) */
+        .mockup-video { background: #fff; border: 1px solid #ddd; }
+        .mockup-video-player { background: #000; height: 130px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .mockup-video-play { width: 40px; height: 40px; background: red; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .mockup-video-info { padding: 10px; }
+        .mockup-video-title { font-weight: bold; font-size: 0.95rem; margin-bottom: 5px; }
+        .mockup-video-sub { font-size: 0.8rem; color: #666; }
+        
+        .actions { text-align: center; margin-top: 2rem; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; margin: 0 5px; color: #fff; }
+        #saveBtn { background-color: var(--primary-color); }
+        #resetBtn { background-color: #e74c3c; }
     </style>
 </head>
 <body>
     <header>
-        <h1>🔍 매체에 드러난 숨은 의미 찾기</h1>
-        <p>중학교 1학년 국어 2단원 - 뉴스, 공익광고, SNS, 영상 꼼꼼히 읽기</p>
+        <h1>🔍 미래엔 국어 1-1: 매체에 드러난 숨은 의미 찾기</h1>
+        <p>교과서 지문(인공지능, 코끼리 광고, 키오스크, 최재천 교수)을 활용한 비판적 읽기 활동</p>
     </header>
 
     <main>
         <section class="category" id="news">
-            <h2><span class="icon">📰</span> 뉴스 (News): 사실과 관점 사이</h2>
+            <h2>📰 뉴스: 사실과 관점 사이</h2>
             <div class="activity-grid">
                 <div class="card">
                     <h3>활동 1: 제목 낚시 수사대</h3>
-                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80" alt="실제 뉴스 기사 사진" class="activity-example-img">
-                    <p class="activity-example-caption">자극적인 헤드라인 기사</p>
-                    <p>자극적인 단어가 포함된 제목과 실제 내용을 비교해 봅니다.</p>
-                    <textarea placeholder="독자의 클릭을 유도하기 위해 어떤 감정을 자극했나요?"></textarea>
+                    <div class="mockup-container mockup-news">
+                        <div class="mockup-news-head" style="color:red;">[단독] 인간 일자리 100% 뺏긴다! 인공지능의 끔찍한 습격</div>
+                        <div class="mockup-news-body">
+                            본문: 인공지능 기술을 도입하면 사람들의 일자리가 감소할 수 있습니다. 많은 일을 보다 정확하게 처리하여 상당수의 직업이 사라질지도 모릅니다.
+                        </div>
+                    </div>
+                    <p>자극적인 기사 제목과 실제 본문 내용(교과서 78쪽)의 온도차를 비교해 봅니다.</p>
+                    <textarea placeholder="기자는 독자의 클릭을 유도하기 위해 어떤 감정을 자극했나요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 2: 사진의 마법</h3>
-                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80" alt="카메라 렌즈 구도 사진" class="activity-example-img">
-                    <p class="activity-example-caption">보도 사진의 렌즈와 구도</p>
-                    <p>동일 사건을 다룬 두 뉴스의 사진 구도를 비교합니다.</p>
-                    <textarea placeholder="사진 구도가 사건 규모를 어떻게 다르게 보이게 하나요?"></textarea>
+                    <h3>활동 2: '누가' 말하는가?</h3>
+                    <div class="mockup-container mockup-news">
+                        <div class="mockup-news-head">아쿠아리움 "벨루가 살기 최적의 환경 조성했다"</div>
+                        <div class="mockup-news-body">
+                            A 아쿠아리움 관계자는 "최신 수조 여과 시스템을 도입해 벨루가가 지내기 완벽한 환경을 만들었다"고 주장했다.
+                        </div>
+                    </div>
+                    <p>최재천 교수님의 의견(교과서 99쪽)은 빠진 채 아쿠아리움 측의 인터뷰만 실린 기사입니다.</p>
+                    <textarea placeholder="특정 집단의 입장만 대변할 때 정보는 어떻게 치우치게 되나요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 3: '누가' 말하는가?</h3>
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="인터뷰 하는 사진" class="activity-example-img">
-                    <p class="activity-example-caption">뉴스 속 특정 집단 인터뷰</p>
-                    <p>기사에 인용된 인터뷰 대상자의 소속과 입장을 확인합니다.</p>
-                    <textarea placeholder="특정 집단의 입장만 대변하고 있지는 않나요?"></textarea>
-                </div>
-                <div class="card">
-                    <h3>활동 4: 단어의 온도 차이</h3>
-                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80" alt="경제 뉴스 주가 하락 사진" class="activity-example-img">
-                    <p class="activity-example-caption">'위기' vs '조정기' 경제 보도</p>
+                    <h3>활동 3: 단어의 온도 차이</h3>
+                    <div class="mockup-container mockup-news">
+                        <div class="mockup-news-head">기사A: 인공지능의 혁신적 발전<br>기사B: 인공지능 기술의 섣부른 도입 우려</div>
+                        <div class="mockup-news-body">
+                            같은 기술을 두고 한 기사는 '혁신'이라 부르고, 다른 기사(교과서 79쪽)는 '섣부른 도입'이라고 표현했습니다.
+                        </div>
+                    </div>
                     <p>상황을 다르게 표현한 단어를 찾아 분석합니다.</p>
-                    <textarea placeholder="단어 선택이 독자의 심리에 미치는 영향을 설명하세요."></textarea>
+                    <textarea placeholder="'혁신'과 '섣부른 도입'이라는 단어 선택이 독자의 심리에 각각 미치는 영향은?"></textarea>
+                </div>
+                <div class="card">
+                    <h3>활동 4: 프레임(Frame) 씌우기</h3>
+                    <div class="mockup-container mockup-news">
+                        <div class="mockup-news-head">키오스크 앞 쩔쩔매는 노인들, "정보 취약 계층의 한계"</div>
+                        <div class="mockup-news-body">
+                            실태 조사 결과 취약 계층의 디지털 역량은 60.2%에 불과하다. 이들은 어색한 순간을 마주하고 있다.
+                        </div>
+                    </div>
+                    <p>교과서(95쪽) 뉴스는 이 문제를 '노인들의 부족한 역량' 탓으로만 돌리는 듯한 제목을 썼습니다.</p>
+                    <textarea placeholder="문제의 원인을 노인들에게만 돌리면 어떤 중요한 사회적 책임이 숨겨지나요?"></textarea>
                 </div>
                 <div class="card">
                     <h3>활동 5: 보도되지 않은 이야기</h3>
-                    <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=600&q=80" alt="숨겨진 서류 더미 사진" class="activity-example-img">
-                    <p class="activity-example-caption">보도 맥락과 숨겨진 사실</p>
-                    <p>특정 사건에 대해 '왜 지금 보도되었을까?'를 유추합니다.</p>
-                    <textarea placeholder="기사가 강조하는 정보 뒤에 숨겨진 사회적 맥락은 무엇일까요?"></textarea>
+                    <div class="mockup-container mockup-news">
+                        <div class="mockup-news-head">스리랑카 코끼리 20마리, 플라스틱 먹고 폐사</div>
+                        <div class="mockup-news-body">
+                            야생 코끼리들이 쓰레기장 주변을 서성이다 플라스틱 쓰레기를 먹고 죽은 채 발견되었습니다.
+                        </div>
+                    </div>
+                    <p>현상(코끼리의 죽음)만 보도하고 원인은 감춰져 있습니다.</p>
+                    <textarea placeholder="기사가 강조하는 정보 뒤에 숨겨진(보도되지 않은) 진짜 가해자나 사회적 원인은?"></textarea>
                 </div>
             </div>
         </section>
 
         <section class="category" id="ads">
-            <h2><span class="icon">💰</span> 광고 (Advertising): 설득의 기술</h2>
+            <h2>💰 광고 및 공익광고: 설득의 기술</h2>
             <div class="activity-grid">
                 <div class="card">
-                    <h3>활동 1: 작은 글씨의 비밀</h3>
-                    <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=600&q=80" alt="거리의 광고판 사진" class="activity-example-img">
-                    <p class="activity-example-caption">화려한 문구 아래 작은 글씨들</p>
-                    <p>광고 하단의 작은 글씨 제한 사항을 찾습니다.</p>
-                    <textarea placeholder="광고주가 강조하고 싶지 않았던 실제 조건은?"></textarea>
+                    <h3>활동 1: 공익광고의 참신한 비유</h3>
+                    <div class="mockup-container mockup-ad" style="background-color:#4a69bd;">
+                        <div class="mockup-ad-visual">🦁 🛍️</div>
+                        <div class="mockup-ad-main">인간이 만든<br>새로운 생태계 교란종</div>
+                        <div class="mockup-ad-desc">(비닐봉지로 사나운 맹수의 얼굴을 표현함)</div>
+                        <div class="mockup-ad-small">한국 연간 플라스틱 소비량 586,500t</div>
+                    </div>
+                    <p>교과서(85쪽)에 수록된 실제 KOBACO 공익광고 카피입니다.</p>
+                    <textarea placeholder="플라스틱 비닐봉지를 '생태계 교란종 맹수'에 비유한 광고주의 의도는 무엇일까요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 2: 색상과 감정</h3>
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt="강렬한 색상의 제품 광고 사진" class="activity-example-img">
-                    <p class="activity-example-caption">시선을 빼앗는 강렬한 색채 마케팅</p>
-                    <p>브랜드가 사용하는 주된 색상을 관찰합니다.</p>
-                    <textarea placeholder="색상을 통해 어떤 감정을 심어주려 하나요?"></textarea>
+                    <h3>활동 2: 감성을 자극하는 색과 문구</h3>
+                    <div class="mockup-container mockup-ad" style="background-color:#34495e;">
+                        <div class="mockup-ad-visual">🎵 🏢</div>
+                        <div class="mockup-ad-main">어떤 음악을 연주하고 계십니까?</div>
+                        <div class="mockup-ad-desc">매일 반복되는 층간 소음, 나에겐 일상이지만 이웃에겐 소음일 뿐입니다.</div>
+                    </div>
+                    <p>교과서(87쪽) 층간 소음 예방 공익광고입니다.</p>
+                    <textarea placeholder="소음을 '음악 연주'에 빗대어 부드럽게 표현한 까닭은 무엇일까요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 3: '보통 사람' 모델</h3>
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="평범한 사람 모델 사진" class="activity-example-img">
-                    <p class="activity-example-caption">친근감을 주는 일반인 광고 모델</p>
-                    <p>평범한 모델을 통한 동질감 전략을 분석합니다.</p>
-                    <textarea placeholder="'너도 이렇게 될 수 있어'라는 메시지를 찾으세요."></textarea>
+                    <h3>활동 3: 숫자와 통계의 함정</h3>
+                    <div class="mockup-container mockup-ad" style="background-color:#e67e22;">
+                        <div class="mockup-ad-visual">📈 91.7%</div>
+                        <div class="mockup-ad-main">국민 91.7% 디지털 접근 완료!</div>
+                        <div class="mockup-ad-desc">완벽한 디지털 시대가 열렸습니다. (정부 홍보물)</div>
+                        <div class="mockup-ad-small">*단, 취약계층의 디지털 실제 활용 역량은 60.2%에 불과함</div>
+                    </div>
+                    <p>교과서(96쪽) 통계를 활용한 가상의 과장 광고입니다.</p>
+                    <textarea placeholder="크게 적힌 91.7%라는 숫자 뒤에 광고주가 숨기고 싶어 한 진실은 무엇인가요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 4: 숫자와 통계의 함정</h3>
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="통계 그래프 화면 사진" class="activity-example-img">
-                    <p class="activity-example-caption">'만족도 1위' 과장된 통계 수치</p>
-                    <p>'판매 1위' 등 문구에 대한 근거를 따져봅니다.</p>
-                    <textarea placeholder="통계 수치가 실제 믿을만한 근거를 가지고 있나요?"></textarea>
+                    <h3>활동 4: 작은 글씨의 비밀</h3>
+                    <div class="mockup-container mockup-ad" style="background-color:#c0392b;">
+                        <div class="mockup-ad-main">최첨단 맞춤형 AI 서비스 무료!</div>
+                        <div class="mockup-ad-desc">당신의 삶을 100배 편하게 만들어 드립니다.</div>
+                        <div class="mockup-ad-small">*고객의 위치 정보, 개인 사생활, 사소한 습관 등을 수집하여 기업이 마음대로 활용할 수 있음에 동의해야 합니다.</div>
+                    </div>
+                    <p>교과서(79쪽) 인공지능 사생활 침해 사례를 바탕으로 한 광고입니다.</p>
+                    <textarea placeholder="화려한 무료 혜택 아래 아주 작게 적힌 조건을 통해 알 수 있는 기업의 진짜 목적은?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 5: 공익광고의 설득 (교과서 연계)</h3>
-                    <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="환경 보호 공익광고 느낌의 사진" class="activity-example-img">
-                    <p class="activity-example-caption">환경/스마트폰 중독 예방 공익광고</p>
-                    <p>KOBACO 공익광고에 사용된 참신한 비유와 설득 방식을 찾습니다.</p>
-                    <textarea placeholder="공익광고가 행동 변화를 이끌어내기 위해 쓴 방법은?"></textarea>
+                    <h3>활동 5: '보통 사람' 모델의 설득</h3>
+                    <div class="mockup-container mockup-ad" style="background-color:#27ae60;">
+                        <div class="mockup-ad-visual">👵 📱</div>
+                        <div class="mockup-ad-main">"나도 이제 스마트폰 뱅킹 한다우"</div>
+                        <div class="mockup-ad-desc">평범한 할머니 모델이 활짝 웃으며 금융 앱을 사용 중인 사진</div>
+                    </div>
+                    <p>유명 연예인이 아닌 평범한 할머니를 모델로 세운 금융 앱 광고입니다.</p>
+                    <textarea placeholder="평범한 사람을 모델로 쓰면 소비자에게 어떤 심리적 효과(메시지)를 주나요?"></textarea>
                 </div>
             </div>
         </section>
 
         <section class="category" id="sns">
-            <h2><span class="icon">📱</span> SNS: 소통과 전시 사이</h2>
+            <h2>📱 SNS: 소통과 전시 사이</h2>
             <div class="activity-grid">
                 <div class="card">
-                    <h3>활동 1: 해시태그(#) 읽기</h3>
-                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80" alt="스마트폰 인스타그램 해시태그 화면" class="activity-example-img">
-                    <p class="activity-example-caption">게시글과 무관한 인기 해시태그</p>
-                    <p>사진과 전혀 상관없는 해시태그의 의도를 분석합니다.</p>
-                    <textarea placeholder="조회수를 높이려는 작성자의 의도를 분석하세요."></textarea>
+                    <h3>활동 1: 해시태그(#)의 속마음</h3>
+                    <div class="mockup-container mockup-sns">
+                        <div class="mockup-sns-top">🍔 맛집_탐방러</div>
+                        <div class="mockup-sns-img">맛있는 수제 햄버거 사진</div>
+                        <div class="mockup-sns-bottom">
+                            오늘 점심은 햄버거! 너무 맛있어요👍<br>
+                            <span class="mockup-sns-tags">#인공지능 #생태계교란종 #최재천 #디지털정보격차 #맞팔</span>
+                        </div>
+                    </div>
+                    <p>사진(햄버거)과 전혀 상관없는 교과서 관련 인기 검색어들이 태그되어 있습니다.</p>
+                    <textarea placeholder="내용과 상관없는 해시태그를 잔뜩 다는 작성자의 진짜 의도는 무엇인가요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 2: '좋아요'의 무게</h3>
-                    <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=600&q=80" alt="SNS 하트(좋아요) 아이콘 사진" class="activity-example-img">
-                    <p class="activity-example-caption">수많은 '좋아요'가 주는 군중 심리</p>
-                    <p>좋아요 수와 댓글 반응이 내 판단에 미치는 영향을 성찰합니다.</p>
-                    <textarea placeholder="다수의 의견에 동조하고 있지는 않나요?"></textarea>
+                    <h3>활동 2: '좋아요'의 군중 심리</h3>
+                    <div class="mockup-container mockup-sns">
+                        <div class="mockup-sns-top">🐬 돌고래_사랑</div>
+                        <div class="mockup-sns-img">수족관에서 쇼를 하는 돌고래 영상</div>
+                        <div class="mockup-sns-bottom">
+                            <strong>❤️ 좋아요 234,120개</strong><br>
+                            수족관 돌고래 쇼 너무 귀여워요! 평생 여기서 행복하게 살았으면!
+                        </div>
+                    </div>
+                    <p>최재천 교수님의 생각과 달리, 수족관 돌고래를 찬양하는 글에 '좋아요'가 엄청나게 많습니다.</p>
+                    <textarea placeholder="엄청난 숫자의 '좋아요'가 나의 올바른 판단(비판적 사고)에 어떤 방해를 주나요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 3: 필터 뒤의 진실</h3>
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80" alt="완벽하게 꾸며진 SNS 셀카 사진" class="activity-example-img">
-                    <p class="activity-example-caption">보정 앱과 필터로 꾸며진 일상</p>
-                    <p>보정 필터 사용의 심리를 이해합니다.</p>
-                    <textarea placeholder="화려한 모습 뒤에 숨겨진 진실은 무엇일까요?"></textarea>
+                    <h3>활동 3: 사진 필터 뒤의 진실</h3>
+                    <div class="mockup-container mockup-sns">
+                        <div class="mockup-sns-top">🐳 바다_여행자</div>
+                        <div class="mockup-sns-img">화려한 조명 속 넓어 '보이는' 수조 속 벨루가 사진</div>
+                        <div class="mockup-sns-bottom">
+                            아쿠아리움 측에서 제공한 완벽한 환경 속 벨루가!
+                        </div>
+                    </div>
+                    <p>실제 좁은 공간이지만 사진 구도와 필터로 매우 넓은 바다처럼 보이게 꾸몄습니다.</p>
+                    <textarea placeholder="왜곡된 사진(필터)을 통해 아쿠아리움 측이 사람들에게 숨기고 싶은 진실은?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 4: 알고리즘의 늪</h3>
-                    <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80" alt="끊임없이 스크롤되는 피드 화면" class="activity-example-img">
-                    <p class="activity-example-caption">나의 취향만 계속 보여주는 추천 피드</p>
-                    <p>나에게만 보이는 추천 게시물의 공통점을 찾습니다.</p>
-                    <textarea placeholder="알고리즘이 내 생각의 범위를 어떻게 제한하나요?"></textarea>
+                    <h3>활동 4: 알고리즘의 편식</h3>
+                    <div class="mockup-container mockup-sns">
+                        <div class="mockup-sns-top">🔍 돋보기 (추천 게시물)</div>
+                        <div class="mockup-sns-bottom" style="line-height: 2;">
+                            ▶ 인공지능이 최고인 이유 5가지<br>
+                            ▶ 인공지능 무조건 찬성해야 하는 이유<br>
+                            ▶ 인공지능 도입으로 성공한 사례 모음
+                        </div>
+                    </div>
+                    <p>인공지능의 부작용(교과서 79쪽)은 하나도 없고, 찬성하는 게시물만 계속 뜹니다.</p>
+                    <textarea placeholder="알고리즘이 한쪽 의견만 보여줄 때, 나의 생각은 어떻게 갇히게 될까요?"></textarea>
                 </div>
                 <div class="card">
                     <h3>활동 5: 뒷광고 감별사</h3>
-                    <img src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?auto=format&fit=crop&w=600&q=80" alt="카페에서 노트북과 협찬 제품을 찍은 사진" class="activity-example-img">
-                    <p class="activity-example-caption">자연스러운 일상을 가장한 제품 홍보</p>
-                    <p>'내돈내산'인 척하는 광고 게시물을 비판적으로 읽습니다.</p>
-                    <textarea placeholder="신뢰도를 악용하려는 뒷광고의 의도를 분석하세요."></textarea>
+                    <div class="mockup-container mockup-sns">
+                        <div class="mockup-sns-top">👤 평범한_직장인</div>
+                        <div class="mockup-sns-img">새로 나온 인공지능 스피커 사진</div>
+                        <div class="mockup-sns-bottom">
+                            우연히 산 AI 스피커! 개인정보 유출 걱정 하나도 없고 너무 좋아요! 완전 강추합니다! #내돈내산
+                        </div>
+                    </div>
+                    <p>사실은 해당 AI 기업에서 돈을 받고 쓴 글이지만 '내돈내산(내 돈으로 내가 산)'이라고 속였습니다.</p>
+                    <textarea placeholder="광고라는 사실을 숨기고 평범한 사용자인 척하는 이유는 무엇일까요?"></textarea>
                 </div>
             </div>
         </section>
 
         <section class="category" id="video">
-            <h2><span class="icon">🎥</span> 영상 (Video): 시각적 몰입의 함정</h2>
+            <h2>🎥 영상: 시각적 몰입과 편집의 함정</h2>
             <div class="activity-grid">
                 <div class="card">
-                    <h3>활동 1: BGM 효과</h3>
-                    <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=600&q=80" alt="슬레이트와 마이크, 음향 사진" class="activity-example-img">
-                    <p class="activity-example-caption">긴박하거나 슬픈 감정을 유도하는 음악</p>
-                    <p>BGM 유무에 따른 영상의 분위기 차이를 분석합니다.</p>
-                    <textarea placeholder="음악이 나의 감정을 어떻게 조종하나요?"></textarea>
+                    <h3>활동 1: 배경음악(BGM)의 감정 조종</h3>
+                    <div class="mockup-container mockup-video">
+                        <div class="mockup-video-player">
+                            <div class="mockup-video-play">▶</div>
+                        </div>
+                        <div class="mockup-video-info">
+                            <div class="mockup-video-title">코끼리의 눈물, 스리랑카 쓰레기장의 비극</div>
+                            <div class="mockup-video-sub">[🔊 아주 슬프고 구슬픈 피아노 배경음악이 흐름]</div>
+                        </div>
+                    </div>
+                    <p>단순한 정보 전달을 넘어 슬픈 BGM을 강하게 깐 뉴스 영상입니다.</p>
+                    <textarea placeholder="뉴스 영상에서 구슬픈 음악이 시청자의 감정을 어떻게 조종하나요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 2: 교차 편집의 기술</h3>
-                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80" alt="영상 편집 프로그램 타임라인 사진" class="activity-example-img">
-                    <p class="activity-example-caption">의도적으로 순서를 바꾼 악마의 편집</p>
-                    <p>편집 순서가 사실을 어떻게 바꾸는지 파악합니다.</p>
-                    <textarea placeholder="실제 사실과 다른 갈등 구조를 어떻게 만들어냈나요?"></textarea>
+                    <h3>활동 2: 악마의 편집 (최재천 교수)</h3>
+                    <div class="mockup-container mockup-video">
+                        <div class="mockup-video-player">
+                            <div class="mockup-video-play">▶</div>
+                            <div style="color:white; position:absolute; bottom:5px; text-align:center; width:100%; font-size:0.8rem;">"동물은 인간에게 억류됐다고 인식하지 않아요"</div>
+                        </div>
+                        <div class="mockup-video-info">
+                            <div class="mockup-video-title">최재천 교수, 수족관 찬성 발언 논란?!</div>
+                            <div class="mockup-video-sub">실제 인터뷰(교과서 100쪽) 중 앞뒤 문맥을 다 자르고 특정 문장만 이어 붙임</div>
+                        </div>
+                    </div>
+                    <p>수족관 반대 입장인 교수의 인터뷰를 앞뒤를 잘라 교묘하게 왜곡했습니다.</p>
+                    <textarea placeholder="제작자가 편집 순서를 바꾸거나 앞뒤 내용을 자른 나쁜 의도는 무엇인가요?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 3: 1분 쇼츠의 생략</h3>
-                    <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?auto=format&fit=crop&w=600&q=80" alt="스마트폰으로 짧은 영상을 보는 사진" class="activity-example-img">
-                    <p class="activity-example-caption">복잡한 사회 이슈를 1분 만에 요약</p>
-                    <p>쇼츠 영상에서 생략된 정보를 유추합니다.</p>
-                    <textarea placeholder="빠른 전달을 위해 놓친 문제의 본질은 무엇일까요?"></textarea>
+                    <h3>활동 3: 1분 쇼츠의 과감한 생략</h3>
+                    <div class="mockup-container mockup-video">
+                        <div class="mockup-video-player" style="height: 200px; width: 120px; margin: 0 auto; background:#222;">
+                            <div class="mockup-video-play" style="width:30px; height:30px; font-size:0.8rem;">▶</div>
+                            <div style="color:white; position:absolute; top:10px; font-weight:bold;">Shorts</div>
+                        </div>
+                        <div class="mockup-video-info">
+                            <div class="mockup-video-title">키오스크 1분 요약: 무조건 없애야 함!</div>
+                            <div class="mockup-video-sub">해결책이나 대안 고민 없이 분노만 유발하고 영상 끝남</div>
+                        </div>
+                    </div>
+                    <p>빠른 전달을 위해 중요한 해결 과정(디지털 교육 지원 등)을 생략했습니다.</p>
+                    <textarea placeholder="복잡한 사회 문제를 1분짜리로만 볼 때 놓치게 되는 중요한 본질은?"></textarea>
                 </div>
                 <div class="card">
-                    <h3>활동 4: 유튜버의 말투</h3>
-                    <img src="https://images.unsplash.com/photo-1587614295999-6c1c13675117?auto=format&fit=crop&w=600&q=80" alt="확신에 찬 표정으로 말하는 유튜버 사진" class="activity-example-img">
-                    <p class="activity-example-caption">단정적이고 확신에 찬 크리에이터의 어조</p>
-                    <p>확신에 찬 어조가 주는 신뢰감의 착각을 분석합니다.</p>
-                    <textarea placeholder="말투가 정보의 신뢰성을 근거 없이 높이고 있지는 않나요?"></textarea>
+                    <h3>활동 4: 유튜버의 단정적인 말투</h3>
+                    <div class="mockup-container mockup-video">
+                        <div class="mockup-video-player">
+                            <div class="mockup-video-play">▶</div>
+                        </div>
+                        <div class="mockup-video-info">
+                            <div class="mockup-video-title">제가 장담합니다! 제 말이 무조건 맞아요!</div>
+                            <div class="mockup-video-sub">"인공지능 도입 반대하는 사람들은 다 바보들입니다!" (큰 목소리와 확신에 찬 어조)</div>
+                        </div>
+                    </div>
+                    <p>논리적 근거(논증) 없이 큰 목소리와 확신에 찬 말투만 사용하는 영상입니다.</p>
+                    <textarea placeholder="자신감 넘치는 유튜버의 말투가 우리에게 주는 맹목적인 신뢰감의 위험성은?"></textarea>
                 </div>
                 <div class="card">
                     <h3>활동 5: 썸네일 낚시</h3>
-                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=600&q=80" alt="유튜브 썸네일과 클릭 화면 사진" class="activity-example-img">
-                    <p class="activity-example-caption">실제 영상에는 없는 과장된 빨간색 화살표</p>
-                    <p>영상 내용과 다른 썸네일을 분석합니다.</p>
-                    <textarea placeholder="클릭을 유도하기 위해 어떤 과장을 사용했나요?"></textarea>
+                    <div class="mockup-container mockup-video">
+                        <div class="mockup-video-player" style="background:#555;">
+                            <div style="color:yellow; font-weight:900; font-size:1.5rem; text-align:center;">[충격] 수족관 유리가 깨졌다?!</div>
+                            <div style="color:red; font-size:2rem; position:absolute; top:20px; right:20px;">⭕</div>
+                            <div style="color:red; font-size:2rem; position:absolute; top:40px; right:40px;">⬅</div>
+                        </div>
+                        <div class="mockup-video-info">
+                            <div class="mockup-video-title">클릭주의! 아쿠아리움 대참사 현장</div>
+                            <div class="mockup-video-sub">실제 영상에는 유리가 깨진 적이 없으며, 평범한 관람기일 뿐임.</div>
+                        </div>
+                    </div>
+                    <p>영상에는 존재하지 않는 자극적인 장면(빨간색 동그라미와 화살표)을 썸네일에 넣었습니다.</p>
+                    <textarea placeholder="제작자가 이런 거짓 썸네일(시각적 과장)을 만드는 이유는 무엇일까요?"></textarea>
                 </div>
             </div>
         </section>
 
         <div class="actions">
-            <button id="saveBtn">📥 활동지 저장하기</button>
-            <button id="resetBtn">🔄 초기화</button>
+            <button id="saveBtn">📥 활동지 내용 내 컴퓨터에 저장하기</button>
+            <button id="resetBtn">🔄 모두 지우기</button>
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2024 미래엔 중등 국어 1-1 매체 문해력 수업 자료</p>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const saveBtn = document.getElementById('saveBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const textareas = document.querySelectorAll('textarea');
 
-    <script src="script.js"></script>
+            // 브라우저 캐시에 저장된 내용 불러오기
+            textareas.forEach((textarea, index) => {
+                const savedValue = localStorage.getItem(`korean-activity-${index}`);
+                if (savedValue) {
+                    textarea.value = savedValue;
+                }
+
+                // 타이핑 할 때마다 자동 저장
+                textarea.addEventListener('input', () => {
+                    localStorage.setItem(`korean-activity-${index}`, textarea.value);
+                });
+            });
+
+            // 수동 저장 버튼 클릭 시 알림
+            saveBtn.addEventListener('click', () => {
+                alert('작성하신 활동 내용이 브라우저에 안전하게 저장되었습니다! (창을 닫아도 남아있습니다)');
+            });
+
+            // 초기화 버튼
+            resetBtn.addEventListener('click', () => {
+                if (confirm('작성한 내용을 모두 삭제하시겠습니까? (복구할 수 없습니다)')) {
+                    textareas.forEach((textarea, index) => {
+                        textarea.value = '';
+                        localStorage.removeItem(`korean-activity-${index}`);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
